@@ -1,0 +1,23 @@
+<html>
+    <head>
+	<script>
+		async function callAwsLambdaFunction() {
+			fetch( 'ADD API URL HERE',  {
+				method: 'GET'
+			  })
+			.then(response => response.json())
+			.then((response) => {
+				console.log(response);
+				document.getElementById("myDiv").innerHTML = response.body;
+			});
+        }
+    </script>   
+        <title>Test</title>
+    </head>
+    <body>
+		<p>This is only a test, nothing else.</p>
+        <p>Click below button to call API gateway and display result below!</p>
+        <p><div id="myDiv"></div></p>
+        <button onclick="callAwsLambdaFunction()">Click me!</button>
+	</body>
+</html>
