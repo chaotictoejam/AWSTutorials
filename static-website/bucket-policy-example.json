@@ -9,7 +9,7 @@
                 "s3:GetObject"
             ],
             "Resource": [
-                "arn:aws:s3:::static-website-joanneskiles2/*"
+                "arn:aws:s3:::replace-with-your-s3-bucket-name/*"
             ]
         }
     ]
