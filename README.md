@@ -27,3 +27,12 @@ This is a short tutorial on how to read and write to DynamoDB using AWS Lambda F
 * WriteMessage.js
 
 Video: https://youtu.be/f7o8RV3Edck
+
+## Putting it All Together (AWS Gateway API + Lambda+ DynamoDB)
+
+In this tutorial, we are going to connect together everything we learned in the previous AWS Tutorial videos and make a static website that calls our API Gateway which then calls our Lambda Functions and finally writes to or reads from our DynamoDB. The files for this video is under **api-gateway-dynamodb** folder. The files are:
+
+* form.html
+* WriteMessage.js
+
+Video: https://youtu.be/nPdp438SrIs

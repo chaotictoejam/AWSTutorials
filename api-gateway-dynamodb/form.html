@@ -1,0 +1,53 @@
+<html>
+	<script>
+		async function getMessages() {
+			fetch( 'https://otmbnk4ysl.execute-api.us-east-1.amazonaws.com/prod/message',  {
+				method: 'GET'
+			  })
+			.then(response => response.json())
+			.then((response) => {
+                console.log(response.body);
+                response.body.forEach(element => {
+                    document.getElementById("messages").innerHTML += "<p>"+element.message+"</p>"; // Adds each message to div
+                });
+			});
+        }
+		async function submitMessage() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var message = document.getElementById("message").value;
+			fetch( 'https://otmbnk4ysl.execute-api.us-east-1.amazonaws.com/prod/message',  {
+                method: 'POST',
+                body: JSON.stringify({
+                    "name": name,
+                    "email": email,
+                    "message": message
+                })
+			})
+			.then(response => response.json())
+			.then((response) => {
+				console.log(response);
+                document.getElementById("messages").innerHTML += "<p>"+message+"</p>"; // Add new message to message list
+			});
+		}
+        getMessages(); // Calls get message on load
+    </script>   
+    <head>  
+        <title>Test Form</title>
+    </head>
+    <body>
+        <form onsubmit="submitMessage();return false;">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" value=""/><br>
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" name="email" value=""/><br>
+            <label for="message">Message:</label><br>
+            <textarea id="message" name="message" value="" rows="10" cols="30"></textarea><br><br>
+            <input type="submit" value="Submit">
+      </form> 
+      <strong>Messages from DynamoDB</strong>
+      <div id="messages">
+
+      </div>
+	</body>
+</html>
