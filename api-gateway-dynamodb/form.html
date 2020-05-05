@@ -1,7 +1,7 @@
 <html>
 	<script>
 		async function getMessages() {
-			fetch( 'https://otmbnk4ysl.execute-api.us-east-1.amazonaws.com/prod/message',  {
+			fetch( 'YOUR API URL HERE',  {
 				method: 'GET'
 			  })
 			.then(response => response.json())
@@ -16,7 +16,7 @@
             var name = document.getElementById("name").value;
             var email = document.getElementById("email").value;
             var message = document.getElementById("message").value;
-			fetch( 'https://otmbnk4ysl.execute-api.us-east-1.amazonaws.com/prod/message',  {
+			fetch( 'YOUR API URL HERE',  {
                 method: 'POST',
                 body: JSON.stringify({
                     "name": name,
