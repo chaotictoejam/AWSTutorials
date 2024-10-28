@@ -1,37 +1,50 @@
-// Loads in the AWS SDK
-const AWS = require('aws-sdk');
+// Import the DynamoDB client from AWS SDK v3
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
 
-// Creates the document client specifing the region 
-// The tutorial's table is 'in us-east-1'
-const ddb = new AWS.DynamoDB.DocumentClient({region: 'us-east-1'});
+// Create the DynamoDB client
+const client = new DynamoDBClient({ region: 'us-east-1' });
 
-exports.handler = async (event, context, callback) => {
-    // Captures the requestId from the context message
-    const requestId = context.awsRequestId;
+// Create the DynamoDB document client
+const ddbDocClient = DynamoDBDocumentClient.from(client);
 
-    // Handle promise fulfilled/rejected states
-    await createMessage(requestId).then(() => {
-        callback(null, {
+export const handler = async (event, context) => {
+    try {
+        // Captures the requestId from the context message
+        const requestId = context.awsRequestId;
+
+        await createMessage(requestId);
+
+        return {
             statusCode: 201,
             body: '',
             headers: {
-                'Access-Control-Allow-Origin' : '*'
+                'Access-Control-Allow-Origin': '*'
             }
-        });
-    }).catch((err) => {
-        console.error(err)
-    })
+        };
+    } catch (err) {
+        console.error(err);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: 'An error occurred while creating the message' }),
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        };
+    }
 };
 
 // Function createMessage
-// Writes message to DynamoDb table Message 
-function createMessage(requestId) {
+// Writes message to DynamoDB table Message 
+async function createMessage(requestId) {
     const params = {
         TableName: 'Message',
         Item: {
-            'messageId' : requestId,
-            'message' : 'Hello from lambda'
+            'messageId': requestId,
+            'message': 'Hello from lambda'
         }
-    }
-    return ddb.put(params).promise();
+    };
+
+    const command = new PutCommand(params);
+    return ddbDocClient.send(command);
 }

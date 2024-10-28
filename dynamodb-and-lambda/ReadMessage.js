@@ -1,37 +1,47 @@
-// Loads in the AWS SDK
-const AWS = require('aws-sdk'); 
+// Import the DynamoDB client from AWS SDK v3
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
 
-// Creates the document client specifing the region 
-// The tutorial's table is 'in us-east-1'
-const ddb = new AWS.DynamoDB.DocumentClient({region: 'us-east-1'}); 
+// Create the DynamoDB client
+const client = new DynamoDBClient({ region: 'us-east-1' });
 
-exports.handler = async (event, context, callback) => {
-    // Handle promise fulfilled/rejected states
-    await readMessage().then(data => {
-        data.Items.forEach(function(item) {
-            console.log(item.message)
-        });
-        callback(null, {
-            // If success return 200, and items
+// Create the DynamoDB document client
+const ddbDocClient = DynamoDBDocumentClient.from(client); 
+
+export const handler = async (event, context) => {
+    try {
+        const data = await readMessage();
+        
+        // Log each message
+        data.Items.forEach(item => console.log(item.message));
+
+        return {
             statusCode: 200,
-            body: data.Items,
+            body: JSON.stringify(data.Items),
             headers: {
                 'Access-Control-Allow-Origin': '*',
             },
-        })
-    }).catch((err) => {
-        // If an error occurs write to the console
+        };
+    } catch (err) {
         console.error(err);
-    })
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: 'An error occurred while reading messages' }),
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+            },
+        };
+    }
 };
 
 // Function readMessage
 // Reads 10 messages from the DynamoDb table Message
-// Returns promise
-function readMessage() {
+async function readMessage() {
     const params = {
         TableName: 'Message',
         Limit: 10
-    }
-    return ddb.scan(params).promise();
+    };
+    
+    const command = new ScanCommand(params);
+    return ddbDocClient.send(command);
 }
