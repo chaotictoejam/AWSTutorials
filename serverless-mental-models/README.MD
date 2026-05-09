@@ -13,7 +13,7 @@ I've given talks on serverless at AWS Summit and AWS re:Invent. This series is t
 **▶ Video 1 — [When Serverless Is the Wrong Choice](https://youtu.be/uq1LUJWobYg)**
 The honest picture first. Cold starts, the 15-minute ceiling, real cost math from the AWS Calculator, and stateful workloads that fight the model. Includes a decision framework for knowing when to use serverless and when to reach for something else.
 
-**▶ Video 2 — Stateless Does Not Mean Simple** *(Coming Soon)*
+**▶ Video 2 — [Stateless Does Not Mean Simple](https://youtu.be/84JQuzsWjSg)**
 Your functions are stateless. Your system is not. This video maps out exactly where the complexity goes and how to manage it.
 
 **▶ Video 3 — Why Serverless Is About Failure Domains** *(Coming Soon)*
