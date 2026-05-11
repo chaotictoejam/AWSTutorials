@@ -14,7 +14,7 @@ Most serverless tutorials teach you *how* to deploy. This series teaches you *ho
 | # | Title | Status |
 |---|-------|--------|
 | 1 | [When Serverless Is the Wrong Choice](https://youtu.be/uq1LUJWobYg) | ▶ Available |
-| 2 | Stateless Does Not Mean Simple | Coming Soon |
+| 2 | [Stateless Does Not Mean Simple](https://youtu.be/84JQuzsWjSg) | ▶ Available |
 | 3 | Why Serverless Is About Failure Domains | Coming Soon |
 | 4 | Build a Minimal Serverless API (hands-on) | Coming Soon |
 
